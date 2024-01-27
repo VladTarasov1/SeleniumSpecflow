@@ -1,19 +1,21 @@
-﻿using UI_Automation.POM.Common;
+﻿using OpenQA.Selenium;
 
 namespace UI_Automation.POM
 {
-    public class GoogleStartPage : CommonLocators
+    public class GoogleStartPage
     {
-        private GoogleStartPageMethods _googleStartPageMethods;
 
-        public GoogleStartPage(GoogleStartPageMethods googleStartPageMethods)
+        private IWebDriver _driver;
+
+        public GoogleStartPage(IWebDriver driver)
         {
-            _googleStartPageMethods = googleStartPageMethods;
+            _driver = driver;
         }
 
         public GoogleStartPage NavigateToStartPage()
         {
-            _googleStartPageMethods.Navigate("https://www.google.com/");
+            _driver.Navigate().GoToUrl("https://www.google.com/");
+            Thread.Sleep(2000);
             return this;
         }
 

@@ -1,4 +1,6 @@
 ﻿using UI_Automation.POM;
+using TechTalk.SpecFlow;
+using OpenQA.Selenium;
 
 namespace UI_Automation.StepDefinitions
 {
@@ -6,10 +8,11 @@ namespace UI_Automation.StepDefinitions
     public class BasicSteps
     {
         private GoogleStartPage _googleStartPage;
+        private IWebDriver _driver;
 
-        public BasicSteps(GoogleStartPage googleStartPage)
+        public BasicSteps(IWebDriver driver)
         {
-            _googleStartPage = googleStartPage;
+            _driver = driver;
         }
 
         [Given(@"I am on base page")]
