@@ -18,6 +18,7 @@ namespace UI_Automation.StepDefinitions
         [Given(@"I am on base page")]
         public void GivenIAmOnBasePage()
         {
+            _googleStartPage = new GoogleStartPage(_driver);
             _googleStartPage.NavigateToStartPage();
         }
 
