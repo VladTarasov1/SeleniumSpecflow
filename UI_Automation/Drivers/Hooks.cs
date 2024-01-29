@@ -1,6 +1,7 @@
 ﻿using BoDi;
 using OpenQA.Selenium;
 using OpenQA.Selenium.Chrome;
+using OpenQA.Selenium.Edge;
 using TechTalk.SpecFlow;
 
 namespace UI_Automation.Drivers
@@ -15,13 +16,31 @@ namespace UI_Automation.Drivers
             _container = container;
         }
 
-        [BeforeScenario]
-        public void SetupDriver()
+        public void SetupDriver(string browser)
         {
-            IWebDriver driver = new ChromeDriver(Environment.CurrentDirectory);
-            driver.Manage().Window.Maximize();
+            switch (browser)
+            {
+                case "chrome":
+                    IWebDriver chromeDriver = new ChromeDriver(Environment.CurrentDirectory);
+                    chromeDriver.Manage().Window.Maximize();
+                    _container.RegisterInstanceAs(chromeDriver);
+                    break;
 
-            _container.RegisterInstanceAs<IWebDriver>(driver);
+                case "edge":
+                    IWebDriver edgeDriver = new EdgeDriver(Environment.CurrentDirectory);
+                    edgeDriver.Manage().Window.Maximize();
+                    _container.RegisterInstanceAs(edgeDriver);
+                    break;
+
+                default:
+                    throw new ArgumentException($"Browser not yet implemented: {browser}");
+            }
+        }
+
+        [Given(@"I setup '([^']*)' browser")]
+        public void GivenISetupBrowser(string browser)
+        {
+            SetupDriver(browser);
         }
 
         [AfterScenario]
