@@ -3,9 +3,8 @@ using Microsoft.Extensions.Configuration;
 using OpenQA.Selenium;
 using OpenQA.Selenium.Chrome;
 using OpenQA.Selenium.Edge;
-using System.Security;
 using TechTalk.SpecFlow;
-using UI_Automation.ConfigVariables;
+using UI_Automation.Variables;
 
 namespace UI_Automation.Drivers
 {
@@ -13,17 +12,28 @@ namespace UI_Automation.Drivers
     public class Hooks
     {
         private readonly IObjectContainer _container;
-        public static Settings settings;
-        static string settingsPath = Directory.GetParent(Environment.CurrentDirectory)?.Parent?.Parent?.Parent?.FullName;
+        public static Appsettings appsettings;
+        static string frameworkDirectory = Directory.GetParent(Environment.CurrentDirectory)?.Parent?.Parent?.Parent?.FullName;
 
         public Hooks(IObjectContainer container)
         {
             _container = container;
         }
 
-        public void SetupDriver(string browser)
+        [BeforeScenario]
+        public void SetupSettings()
         {
-            switch (browser)
+            appsettings = new Appsettings();
+            ConfigurationBuilder builder = new ConfigurationBuilder();
+            builder.AddJsonFile(GetFilePathForTest("appsettings.json", frameworkDirectory));
+            IConfigurationRoot configuration = builder.Build();
+            configuration.Bind(appsettings);
+        }
+
+        [BeforeScenario]
+        public void SetupDriver()
+        {
+            switch (appsettings.Browser)
             {
                 case "chrome":
                     IWebDriver chromeDriver = new ChromeDriver(Environment.CurrentDirectory);
@@ -38,24 +48,8 @@ namespace UI_Automation.Drivers
                     break;
 
                 default:
-                    throw new ArgumentException($"Browser not yet implemented: {browser}");
+                    throw new ArgumentException($"Browser not yet implemented, check your settings");
             }
-        }
-
-        [BeforeScenario]
-        public void SetupSettings()
-        {
-            settings = new Settings();
-            ConfigurationBuilder builder = new ConfigurationBuilder();
-            builder.AddJsonFile(GetFilePathForTest("settings.json", settingsPath));
-            IConfigurationRoot configuration = builder.Build();
-            configuration.Bind(settings);
-        }
-
-        [Given(@"I setup '([^']*)' browser")]
-        public void GivenISetupBrowser(string browser)
-        {
-            SetupDriver(browser);
         }
 
         [AfterScenario]
