@@ -1,4 +1,5 @@
 ﻿using OpenQA.Selenium;
+using UI_Automation.Drivers;
 
 namespace UI_Automation.POM
 {
@@ -17,7 +18,7 @@ namespace UI_Automation.POM
 
         public LoginPage NavigateToLoginPage()
         {
-            _driver.Navigate().GoToUrl("https://www.saucedemo.com/");
+            _driver.Navigate().GoToUrl(Hooks.settings.BaseUrl);
             return this;
         }
 
