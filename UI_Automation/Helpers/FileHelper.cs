@@ -1,6 +1,6 @@
-﻿namespace UI_Automation.Hooks
+﻿namespace UI_Automation.Helpers
 {
-    public static class FileHook
+    public static class FileHelper
     {
         public static string frameworkDirectory = Directory.GetParent(Environment.CurrentDirectory)?.Parent?.Parent?.Parent?.FullName;
 
