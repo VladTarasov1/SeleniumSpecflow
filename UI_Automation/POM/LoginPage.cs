@@ -18,7 +18,7 @@ namespace UI_Automation.POM
 
         public LoginPage NavigateToLoginPage()
         {
-            _driver.Navigate().GoToUrl(WebDriverHooks.appsettings.BaseUrl);
+            _driver.Navigate().GoToUrl(WebDriverHook.appsettings.BaseUrl);
             return this;
         }
 

@@ -3,6 +3,7 @@
     public static class FileHelper
     {
         public static string frameworkDirectory = Directory.GetParent(Environment.CurrentDirectory)?.Parent?.Parent?.Parent?.FullName;
+        public static string extentReportsDirectory = frameworkDirectory + "\\UI_Automation\\ExtentReports\\";
 
         public static string GetFilePathForTest(string fileName, string frameworkDirectory)
         {
