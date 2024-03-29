@@ -18,7 +18,7 @@ namespace UI_Automation.Hooks
         public static void BeforeTestRun()
         {
             // Create a unique folder for each test run
-            string timestamp = DateTime.Now.ToString("yyyyMMdd_HHmm");
+            string timestamp = DateTime.Now.ToString("yyyyMMdd_HHmmss");
             string reportFolder = Path.Combine(FileHelper.extentReportsDirectory, "Result", $"Result_{timestamp}");
 
             // Create the folder if it doesn't exist
@@ -61,7 +61,7 @@ namespace UI_Automation.Hooks
                 step.Log(Status.Fail, context.StepContext.StepInfo.Text);
 
                 // Create a unique screenshots folder for each execution
-                string timestamp = DateTime.Now.ToString("yyyyMMdd_HHmm");
+                string timestamp = DateTime.Now.ToString("yyyyMMdd_HHmmss");
                 string screenshotsFolder = Path.Combine(FileHelper.extentReportsDirectory, "FailedTests", $"Failed_{timestamp}");
                 Directory.CreateDirectory(screenshotsFolder);
 
