@@ -399,3 +399,6 @@ FodyWeavers.xsd
 
 #SpecFlow Stuff
 *.feature.cs
+
+#htmlReports
+*.html

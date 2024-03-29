@@ -1,5 +1,5 @@
-﻿using AventStack.ExtentReports.Reporter;
-using AventStack.ExtentReports;
+﻿using AventStack.ExtentReports;
+using AventStack.ExtentReports.Reporter;
 using TechTalk.SpecFlow;
 using UI_Automation.Helpers;
 
@@ -8,16 +8,22 @@ namespace UI_Automation.Hooks
     [Binding]
     public class ExtentReportHook
     {
-        public static AventStack.ExtentReports.ExtentReports extent;
-        public static AventStack.ExtentReports.ExtentTest feature;
-        public AventStack.ExtentReports.ExtentTest scenario, step;
+        private static AventStack.ExtentReports.ExtentReports extent;
+        private static AventStack.ExtentReports.ExtentTest feature;
+        private AventStack.ExtentReports.ExtentTest scenario, step;
 
         [BeforeTestRun]
         public static void BeforeTestRun()
         {
-            ExtentHtmlReporter htmlReport = new ExtentHtmlReporter(FileHelper.extentReportsDirectory
-                + Path.DirectorySeparatorChar + "Result"
-                + Path.DirectorySeparatorChar + "Result_" + DateTime.Now.ToString());
+            // Create a unique folder for each test run
+            string timestamp = DateTime.Now.ToString("yyyyMMdd_HHmmss");
+            string reportFolder = Path.Combine(FileHelper.extentReportsDirectory, "Result", $"Result_{timestamp}");
+
+            // Create the folder if it doesn't exist
+            Directory.CreateDirectory(reportFolder);
+
+            // Initialize the test report within the folder
+            ExtentHtmlReporter htmlReport = new ExtentHtmlReporter(Path.Combine(reportFolder, "TestReport.html"));
 
             extent = new AventStack.ExtentReports.ExtentReports();
             extent.AttachReporter(htmlReport);
