@@ -1,5 +1,7 @@
 ﻿using AventStack.ExtentReports;
 using AventStack.ExtentReports.Reporter;
+using OpenQA.Selenium;
+using OpenQA.Selenium.Support.Extensions;
 using TechTalk.SpecFlow;
 using UI_Automation.Helpers;
 
@@ -16,7 +18,7 @@ namespace UI_Automation.Hooks
         public static void BeforeTestRun()
         {
             // Create a unique folder for each test run
-            string timestamp = DateTime.Now.ToString("yyyyMMdd_HHmmss");
+            string timestamp = DateTime.Now.ToString("yyyyMMdd_HHmm");
             string reportFolder = Path.Combine(FileHelper.extentReportsDirectory, "Result", $"Result_{timestamp}");
 
             // Create the folder if it doesn't exist
@@ -48,7 +50,7 @@ namespace UI_Automation.Hooks
         }
 
         [AfterStep]
-        public void AfterStep(ScenarioContext context)
+        public void AfterStep(ScenarioContext context, IWebDriver driver)
         {
             if (context.TestError == null)
             {
@@ -57,6 +59,15 @@ namespace UI_Automation.Hooks
             else
             {
                 step.Log(Status.Fail, context.StepContext.StepInfo.Text);
+
+                // Create a unique screenshots folder for each execution
+                string timestamp = DateTime.Now.ToString("yyyyMMdd_HHmm");
+                string screenshotsFolder = Path.Combine(FileHelper.extentReportsDirectory, "FailedTests", $"Failed_{timestamp}");
+                Directory.CreateDirectory(screenshotsFolder);
+
+                // Save the screenshot within the screenshots folder
+                var screenshot = driver.TakeScreenshot();
+                screenshot.SaveAsFile(Path.Combine(screenshotsFolder, $"Failed_{timestamp}.png"));
             }
         }
 

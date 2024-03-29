@@ -400,5 +400,6 @@ FodyWeavers.xsd
 #SpecFlow Stuff
 *.feature.cs
 
-#htmlReports
+#htmlReports & screenshots
 *.html
+*.png
