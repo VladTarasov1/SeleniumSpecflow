@@ -10,6 +10,8 @@ Scenario: Login
 		| standard_user | secret_sauce |
 	Then I see 'Products' list
 
+#remove ignore if you want to trigger screenshots on failure
+@ignore
 @fail
 Scenario: Login failed - provoke screenshot in report
 	Given I am on the login page
