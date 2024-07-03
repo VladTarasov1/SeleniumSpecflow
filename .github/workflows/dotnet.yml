@@ -21,8 +21,8 @@ jobs:
       with:
         dotnet-version: 8.0.x
     - name: Restore dependencies
-      run: dotnet restore SeleniumSpecflow/UI_Automation/UI_Automation.csproj
+      run: dotnet restore UI_Automation/UI_Automation.csproj
     - name: Build
-      run: dotnet build SeleniumSpecflow/UI_Automation/UI_Automation.csproj --no-restore
+      run: dotnet build UI_Automation/UI_Automation.csproj --no-restore
     - name: Test
-      run: dotnet test SeleniumSpecflow/UI_Automation/UI_Automation.csproj --no-build --verbosity normal
+      run: dotnet test UI_Automation/UI_Automation.csproj --no-build --verbosity normal
