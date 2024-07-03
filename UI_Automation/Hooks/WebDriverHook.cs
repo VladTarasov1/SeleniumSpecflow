@@ -37,13 +37,17 @@ namespace UI_Automation.Drivers
             switch (appsettings.Browser)
             {
                 case "chrome":
-                    IWebDriver chromeDriver = new ChromeDriver(Environment.CurrentDirectory);
+                    ChromeOptions chromeOptions = new ChromeOptions();
+                    chromeOptions.AddArguments(appsettings.Headless);
+                    IWebDriver chromeDriver = new ChromeDriver(chromeOptions);
                     chromeDriver.Manage().Window.Maximize();
                     container.RegisterInstanceAs(chromeDriver);
                     break;
 
                 case "edge":
-                    IWebDriver edgeDriver = new EdgeDriver(Environment.CurrentDirectory);
+                    EdgeOptions edgeOptions = new EdgeOptions();
+                    edgeOptions.AddArguments(appsettings.Headless);
+                    IWebDriver edgeDriver = new EdgeDriver(edgeOptions);
                     edgeDriver.Manage().Window.Maximize();
                     container.RegisterInstanceAs(edgeDriver);
                     break;
