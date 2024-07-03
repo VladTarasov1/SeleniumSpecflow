@@ -8,6 +8,6 @@ UI automation framework (C# + Selenium + SpecFlow)
 * common logic classes for map & assertions
 * screenshots for failures +
 * html reports +
-* github actions
+* github actions +-
 * selenium grid
 * docker
